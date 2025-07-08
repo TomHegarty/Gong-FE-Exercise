@@ -1,5 +1,5 @@
 import { Avatar, Menu, MenuItem } from "@mui/material";
-import { stringAvatar } from "../../utils/avatars";
+import { stringAvatar, stringToColor } from "../../utils/avatars";
 import { useUserStore } from "../../stores/UserStore";
 import { UserCardContainer } from "./user-card.style";
 import { useState } from "react";
@@ -37,7 +37,11 @@ const UserCard = () => {
             <Avatar
               {...stringAvatar(`${userFirstName} ${userLastName}`)}
               variant="rounded"
-              sx={{ width: 32, height: 32 }}
+              sx={{
+                width: 32,
+                height: 32,
+                background: stringToColor(`${userFirstName} ${userLastName}`),
+              }}
             />
           )}
         </div>

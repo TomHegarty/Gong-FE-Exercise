@@ -19,7 +19,6 @@ export const fetchAllUserData = async (): Promise<UserData[]> => {
     }
 
     const data = await response.json();
-    console.log("Fetched user data:", data);
 
     return data;
   } catch (error) {
@@ -37,11 +36,6 @@ export const getUserIdFromSecret = async (
 
   const data = await keyPairs.json();
 
-  console.log(data);
-  console.log(
-    data["90070649D4F855D2197731F819F8B1D2197731F8198E5C8A213F1FC819219845"]
-  );
-
   return data[userSecret];
 };
 
@@ -49,8 +43,6 @@ export const fetchUserData = async (
   userSecret: string
 ): Promise<UserData | null> => {
   const userID = await getUserIdFromSecret(userSecret);
-
-  console.log("User ID from secret:", userID);
 
   if (!userID) {
     console.error("No user ID found for the provided secret.");
@@ -63,7 +55,6 @@ export const fetchUserData = async (
     );
 
     if (!response.ok) {
-      console.log(response);
       console.log("no user data response");
       throw new Error();
     }
@@ -73,8 +64,6 @@ export const fetchUserData = async (
     const userData = (Object.values(data) as UserData[]).filter(
       (user: UserData) => user.id === Number(userID)
     );
-
-    console.log(userData);
 
     return userData[0];
   } catch (error) {

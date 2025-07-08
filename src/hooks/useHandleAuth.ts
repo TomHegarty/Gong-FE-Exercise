@@ -40,7 +40,7 @@ export const useHandleAuth = () => {
       };
     }
 
-    const userData = await fetchUserData(userSecret); //⚠️
+    const userData = await fetchUserData(userSecret);
 
     if (!userData) {
       setEmptyUserStore();
@@ -64,10 +64,7 @@ export const useHandleAuth = () => {
   };
 
   const handleLogout = (): AuthReturnType => {
-    console.log("Handling logout");
-
     setEmptyUserStore();
-
     navigate("/login");
 
     return {

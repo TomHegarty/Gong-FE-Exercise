@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 import { fetchAllUserData } from "../../services/RealtimeDatabaseService";
 
 //testing
-
 const SampleEmails = (props: any) => {
   const [users, setUsers] = useState<any[]>([]);
 
@@ -19,8 +18,9 @@ const SampleEmails = (props: any) => {
 
   return (
     <>
-      {users.map((user) => (
+      {users.map((user, index) => (
         <button
+          key={index}
           onClick={() => {
             props.setUserEmail(user.email);
             props.setUserPassword(user.password);
@@ -79,13 +79,11 @@ const LoginPage = () => {
     const loginReturn = await handleLogin(userEmail, userPassword);
 
     if (loginReturn.status === "success") {
-      console.log("pass");
       setFormError(null);
       setFormLoading(false);
 
       navigate("/hierarchy");
     } else {
-      console.warn("fail");
       setFormError(loginReturn.message);
       setFormLoading(false);
     }
