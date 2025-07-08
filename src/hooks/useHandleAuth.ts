@@ -40,7 +40,7 @@ export const useHandleAuth = () => {
       };
     }
 
-    const userData = await fetchUserData(userSecret);
+    const userData = await fetchUserData(userSecret); //⚠️
 
     if (!userData) {
       setEmptyUserStore();
