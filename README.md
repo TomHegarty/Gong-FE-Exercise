@@ -1,4 +1,4 @@
-Gong Front End Excercise - Tom Hegarty 
+Gong Front End Excercise - Tom Hegarty | tomhegarty98 <at> gmail.com
 
 Installation and run instructions: 
 
