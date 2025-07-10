@@ -36,8 +36,6 @@ export const getUserIdFromSecret = async (
 
   const data = await keyPairs.json();
 
-  console.log(data);
-
   return data[userSecret];
 };
 

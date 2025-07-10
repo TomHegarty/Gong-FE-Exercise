@@ -3,11 +3,7 @@ import { Route, Routes } from "react-router";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import HierarchyTreePage from "./pages/HierarchyTreePage/HierarchyTreePage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-
-export const routes = {
-  login: "/login",
-  hierarchy: "/hierarchy",
-};
+import { routes } from "./routes";
 
 const App = () => {
   return (

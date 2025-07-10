@@ -6,8 +6,8 @@ import HierarchyNode from "../../components/HierarchyNode/HierarchyNode";
 import { useUserStore } from "../../stores/UserStore";
 import { Alert, Button } from "@mui/material";
 import { useNavigate } from "react-router";
-import { routes } from "../../App";
 import PageLayout from "../../components/PageLayout/PageLayout";
+import { routes } from "../../routes";
 
 const HierarchyTreePage = () => {
   const hierarchyTree = useHierarchyStore((state) => state.hierarchyTree);
@@ -16,8 +16,10 @@ const HierarchyTreePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!currentUser) return;
+
     fetchHierarchyData();
-  }, []);
+  }, [fetchHierarchyData, currentUser]);
 
   return (
     <PageLayout>

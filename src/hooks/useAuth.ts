@@ -2,8 +2,8 @@ import { encode } from "../utils/encode";
 import { useUserStore } from "../stores/UserStore";
 import { fetchUserData } from "../services/RealtimeDatabaseService";
 import { useNavigate } from "react-router";
-import { routes } from "../App";
 import type { ServiceResponse } from "../types/ServiceResponse";
+import { routes } from "../routes";
 
 export const useAuth = () => {
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);

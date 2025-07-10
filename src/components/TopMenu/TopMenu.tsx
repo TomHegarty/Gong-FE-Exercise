@@ -8,25 +8,17 @@ import {
 } from "./top-menu.style";
 import { useNavigate } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { routes } from "../../App";
+import { routes } from "../../routes";
 
 const TopMenu = () => {
   const navigate = useNavigate();
-
   const currentUser = useUserStore((state) => state.currentUser);
+  const menuAnchorRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const { handleLogout } = useAuth();
-
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <TopMenuContainer>
@@ -35,27 +27,29 @@ const TopMenu = () => {
         <b>Gong</b>
       </ImageContainer>
       {currentUser ? (
-        <UserInfoContainer onClick={handleMenuClick}>
-          <UserCard
-            userFirstName={currentUser.firstName}
-            userLastName={currentUser.lastName}
-            userEmail={currentUser.email}
-            userPhoto={currentUser.photo}
-          />
+        <UserInfoContainer ref={menuAnchorRef}>
+          <div onClick={() => setMenuOpen(true)}>
+            <UserCard
+              userFirstName={currentUser.firstName}
+              userLastName={currentUser.lastName}
+              userEmail={currentUser.email}
+              userPhoto={currentUser.photo}
+            />
+          </div>
           <Menu
             id="user-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleMenuClose}
+            anchorEl={menuAnchorRef.current}
+            open={menuOpen}
+            onClose={() => setMenuOpen(false)}
           >
-            <MenuItem onClick={handleLogout}>
-              <Button
-                variant="text"
-                onClick={handleLogout}
-                startIcon={<LogoutIcon />}
-              >
-                Logout
-              </Button>
+            <MenuItem
+              onClick={() => {
+                handleLogout();
+                setMenuOpen(false);
+              }}
+            >
+              <LogoutIcon fontSize="small" style={{ marginRight: 8 }} />
+              Logout
             </MenuItem>
           </Menu>
         </UserInfoContainer>

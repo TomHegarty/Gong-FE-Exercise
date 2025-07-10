@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
-import { routes } from "../../App";
 import PageLayout from "../../components/PageLayout/PageLayout";
+import { routes } from "../../routes";
 
 const NotFoundPage = () => {
   const navigate = useNavigate();

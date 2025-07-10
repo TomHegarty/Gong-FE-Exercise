@@ -3,9 +3,9 @@ import { LoginFormContainer } from "./login-page.style";
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
-import { routes } from "../../App";
 import PageLayout from "../../components/PageLayout/PageLayout";
 import { validateEmail, validatePassword } from "../../utils/validations";
+import { routes } from "../../routes";
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string | undefined>(
