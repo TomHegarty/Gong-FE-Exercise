@@ -1,7 +1,7 @@
 # Gong Front End Exercise
  **Tom Hegarty**  -  tomhegarty98<@>gmail.com
 
-This app is built to satisfy the requirements from the specification, the spec can be found in the code as `spec.pdf`
+This app is built to satisfy the requirements from the provided specification, the spec can be found in the code as [spec.pdf](./spec.pdf)
 
 ## Installation and run instructions:
 **Dev app:**
