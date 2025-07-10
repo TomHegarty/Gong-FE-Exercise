@@ -13,13 +13,12 @@ interface OpenButtonContainerProps {
   rotate: boolean;
 }
 
-export const OpenButtonContainer = styled.div<OpenButtonContainerProps>(
-  (props) => ({
-    transform: props.rotate ? "rotate(45deg)" : "none",
-    transition: "transform 0.2s ease",
-
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  })
-);
+export const OpenButtonContainer = styled("span", {
+  shouldForwardProp: (prop) => prop !== "rotate",
+})<OpenButtonContainerProps>((props) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  transition: "transform 0.3s",
+  transform: props.rotate ? "rotate(45deg)" : "none",
+}));

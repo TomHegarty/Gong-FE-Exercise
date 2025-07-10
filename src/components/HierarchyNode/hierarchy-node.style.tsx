@@ -17,15 +17,6 @@ export const UserHierarchyNodeContainer = styled.li((props) => ({
     alignItems: "center",
     justifyContent: "space-between",
     gap: props.theme.spacing(1),
-
-    "& span": {
-      display: "flex",
-      alignItems: "center",
-    },
-  },
-
-  "& .user-hierarchy-children-container": {
-    width: "100%",
   },
 }));
 

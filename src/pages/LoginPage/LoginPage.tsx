@@ -69,6 +69,7 @@ const LoginPage = () => {
         <TextField
           id="email-input"
           label="Email Address"
+          autoComplete="username"
           variant="outlined"
           size="small"
           value={userEmail || ""}
@@ -83,6 +84,7 @@ const LoginPage = () => {
           id="password-input"
           label="Password"
           type="password"
+          autoComplete="current-password"
           variant="outlined"
           size="small"
           value={userPassword || ""}

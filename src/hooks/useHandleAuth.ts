@@ -50,7 +50,6 @@ export const useHandleAuth = () => {
       };
     }
 
-    // set store values
     setUserEmail(userData.email);
     setUserFirstName(userData.firstName);
     setUserLastName(userData.lastName);
