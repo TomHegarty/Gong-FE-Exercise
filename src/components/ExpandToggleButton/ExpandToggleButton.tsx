@@ -1,30 +1,32 @@
 import {
   OpenButtonContainer,
-  UserHierarchyNodeButton,
+  ToggleButtonContainer,
 } from "./expand-toggle-button.style";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
-interface ExpandButtonProps {
+interface ExpandToggleButtonProps {
   toggleState: boolean;
   toggleSetter: (toggleState: boolean) => void;
   inactive?: boolean;
 }
 
-const ExpandToggleButton = (props: ExpandButtonProps) => {
+const ExpandToggleButton = (props: ExpandToggleButtonProps) => {
   return (
-    <UserHierarchyNodeButton
-      isManager={!props.inactive || true}
-      onClick={() => !props.inactive && props.toggleSetter(!props.toggleState)}
+    <ToggleButtonContainer
+      inactive={props.inactive || false}
+      onClick={() =>
+        props.inactive ? null : props.toggleSetter(!props.toggleState)
+      }
     >
-      {!props.inactive ? (
+      {props.inactive ? (
+        <RemoveIcon />
+      ) : (
         <OpenButtonContainer rotate={props.toggleState}>
           <AddIcon />
         </OpenButtonContainer>
-      ) : (
-        <RemoveIcon />
       )}
-    </UserHierarchyNodeButton>
+    </ToggleButtonContainer>
   );
 };
 

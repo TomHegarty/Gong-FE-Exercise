@@ -4,14 +4,13 @@ import {
 } from "../services/RealtimeDatabaseService";
 import { useHierarchyStore, type UserNode } from "../stores/HierarchyStore";
 import { useUserStore } from "../stores/UserStore";
+import type { ServiceResponse } from "../types/ServiceResponse";
 
-export interface AuthReturnType {
-  message: string;
-  status: "success" | "error";
-}
+const cacheTimeout = 5 * 60 * 1000; // 5 mins
 
 export const useHierarchyData = () => {
-  const userId = useUserStore((state) => state.userId);
+  const currentUser = useUserStore((state) => state.currentUser);
+
   const lastFetched = useHierarchyStore((state) => state.lastFetched);
   const setLastFetched = useHierarchyStore((state) => state.setLastFetched);
   const setHierarchyTree = useHierarchyStore((state) => state.setHierarchyTree);
@@ -38,8 +37,8 @@ export const useHierarchyData = () => {
 
   const fetchHierarchyData = async (
     bypassCache: boolean = false
-  ): Promise<AuthReturnType> => {
-    if (!userId) {
+  ): Promise<ServiceResponse> => {
+    if (!currentUser?.id) {
       return {
         message: "User ID is not set. Cannot fetch hierarchy data.",
         status: "error",
@@ -48,7 +47,8 @@ export const useHierarchyData = () => {
 
     if (
       !bypassCache &&
-      (lastFetched > Date.now() - 1000 * 60 * 5 || lastFetched === 0) &&
+      lastFetched &&
+      lastFetched > Date.now() - cacheTimeout &&
       hierarchyTree &&
       hierarchyTree.length > 0
     ) {
@@ -73,7 +73,7 @@ export const useHierarchyData = () => {
     setLastFetched(Date.now());
 
     return {
-      message: "account data fetched successfully",
+      message: "Account data fetched successfully",
       status: "success",
     };
   };

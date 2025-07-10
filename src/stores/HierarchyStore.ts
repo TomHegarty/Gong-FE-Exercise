@@ -6,12 +6,12 @@ export interface UserNode extends UserData {
 }
 
 const hierarchyStoreInitialState = {
-  lastFetched: 0,
+  lastFetched: undefined,
   hierarchyTree: undefined,
 };
 
 interface HierarchyStore {
-  lastFetched: number;
+  lastFetched: number | undefined;
   setLastFetched: (timestamp: number) => void;
   hierarchyTree: UserNode[] | undefined;
   setHierarchyTree: (tree: UserNode[] | undefined) => void;

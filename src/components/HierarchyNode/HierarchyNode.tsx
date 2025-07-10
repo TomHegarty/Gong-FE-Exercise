@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {
-  UserHierarchyChildrenWrapper,
-  UserHierarchyNodeContainer,
+  HierarchyChildrenWrapper,
+  HierarchyNodeContainer,
 } from "./hierarchy-node.style";
 import UserCard from "../UserCard/UserCard";
-import ExpandToggleButton from "../ExpandButton/ExpandButton";
+import ExpandToggleButton from "../ExpandToggleButton/ExpandToggleButton";
 import type { UserNode } from "../../stores/HierarchyStore";
 
 const HierarchyNode = (props: UserNode) => {
@@ -12,7 +12,7 @@ const HierarchyNode = (props: UserNode) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <UserHierarchyNodeContainer>
+    <HierarchyNodeContainer>
       <div className="user-hierarchy-row">
         <ExpandToggleButton
           toggleState={expanded}
@@ -26,14 +26,14 @@ const HierarchyNode = (props: UserNode) => {
           userPhoto={props.photo}
         />
       </div>
-      <UserHierarchyChildrenWrapper expanded={expanded && isManager}>
+      <HierarchyChildrenWrapper expanded={expanded && isManager}>
         {expanded &&
           isManager &&
           props.children.map((child: UserNode) => (
             <HierarchyNode key={child.id} {...child} />
           ))}
-      </UserHierarchyChildrenWrapper>
-    </UserHierarchyNodeContainer>
+      </HierarchyChildrenWrapper>
+    </HierarchyNodeContainer>
   );
 };
 

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const UserHierarchyNodeContainer = styled.li((props) => ({
+export const HierarchyNodeContainer = styled.li((props) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
@@ -20,12 +20,12 @@ export const UserHierarchyNodeContainer = styled.li((props) => ({
   },
 }));
 
-interface UserHierarchyChildrenWrapperProps {
+interface HierarchyChildrenWrapperProps {
   expanded: boolean;
 }
 
-export const UserHierarchyChildrenWrapper =
-  styled.ul<UserHierarchyChildrenWrapperProps>((props) => ({
+export const HierarchyChildrenWrapper =
+  styled.ul<HierarchyChildrenWrapperProps>((props) => ({
     width: "100%",
     overflow: "hidden",
     transition: "max-height 0.5s ease",

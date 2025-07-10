@@ -1,69 +1,58 @@
 import { Alert, Button, TextField } from "@mui/material";
 import { LoginFormContainer } from "./login-page.style";
 import { useState, type FormEvent } from "react";
-import { useHandleAuth } from "../../hooks/useHandleAuth";
-import TopMenu from "../../components/TopMenu/TopMenu";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
-
-const validateEmail = (email: string | undefined) => {
-  if (!email) return "Email is required";
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) return "Enter a valid email address";
-
-  return null;
-};
-
-const validatePassword = (password: string | undefined) => {
-  if (!password) return "Password is required";
-
-  if (password.length < 6) return "Password must be at least 6 characters";
-  return null;
-};
+import { routes } from "../../App";
+import PageLayout from "../../components/PageLayout/PageLayout";
+import { validateEmail, validatePassword } from "../../utils/validations";
 
 const LoginPage = () => {
-  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
+  const [userEmail, setUserEmail] = useState<string | undefined>(
+    "eric.lutes@luteric.co.uk"
+  ); //⚠️⚠️⚠️⚠️
   const [userPassword, setUserPassword] = useState<string | undefined>(
+    "Vg=@|AN4"
+  ); //⚠️⚠️⚠️⚠️
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
+  const [passwordError, setPasswordError] = useState<string | undefined>(
     undefined
   );
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [formError, setFormError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | undefined>(undefined);
   const [formLoading, setFormLoading] = useState<boolean>(false);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const { handleLogin } = useHandleAuth();
+  const { handleLogin } = useAuth();
 
   const handleLogIn = async (event: FormEvent) => {
     event.preventDefault();
     setFormLoading(true);
-    setFormError(null);
+    setFormError(undefined);
 
-    setEmailError(() => validateEmail(userEmail));
-    setPasswordError(() => validatePassword(userPassword));
+    const emailError = validateEmail(userEmail);
+    setEmailError(emailError);
+
+    const passwordError = validatePassword(userPassword);
+    setPasswordError(passwordError);
 
     if (emailError || passwordError || !userEmail || !userPassword) {
       setFormLoading(false);
       return;
     }
+    const loginResult = await handleLogin(userEmail, userPassword);
+    setFormLoading(false);
 
-    const loginReturn = await handleLogin(userEmail, userPassword);
-
-    if (loginReturn.status === "success") {
-      setFormError(null);
-      setFormLoading(false);
-
-      navigate("/hierarchy");
+    if (loginResult.status === "success") {
+      setFormError(undefined);
+      navigate(routes.hierarchy);
     } else {
-      setFormError(loginReturn.message);
-      setFormLoading(false);
+      setFormError(loginResult.message);
     }
   };
 
   return (
-    <>
-      <TopMenu />
+    <PageLayout>
       <h1>Please Login</h1>
       <LoginFormContainer onSubmit={handleLogIn}>
         <TextField
@@ -75,7 +64,7 @@ const LoginPage = () => {
           value={userEmail || ""}
           onChange={(event) => {
             setUserEmail(event.target.value);
-            setEmailError(null);
+            setEmailError(undefined);
           }}
           error={!!emailError}
           helperText={emailError}
@@ -90,7 +79,7 @@ const LoginPage = () => {
           value={userPassword || ""}
           onChange={(event) => {
             setUserPassword(event.target.value);
-            setPasswordError(null);
+            setPasswordError(undefined);
           }}
           error={!!passwordError}
           helperText={passwordError}
@@ -105,7 +94,7 @@ const LoginPage = () => {
           Login
         </Button>
       </LoginFormContainer>
-    </>
+    </PageLayout>
   );
 };
 

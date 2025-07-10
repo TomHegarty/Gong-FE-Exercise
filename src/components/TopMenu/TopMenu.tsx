@@ -9,20 +9,17 @@ import {
 import { useNavigate } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
-import { useHandleAuth } from "../../hooks/useHandleAuth";
+import { useAuth } from "../../hooks/useAuth";
+import { routes } from "../../App";
 
 const TopMenu = () => {
-  const userId = useUserStore((state) => state.userId);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const userFirstName = useUserStore((state) => state.userFirstName);
-  const userLastName = useUserStore((state) => state.userLastName);
-  const userEmail = useUserStore((state) => state.userEmail);
-  const userPhoto = useUserStore((state) => state.userPhoto);
+  const currentUser = useUserStore((state) => state.currentUser);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { handleLogout } = useHandleAuth();
+  const { handleLogout } = useAuth();
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,13 +34,13 @@ const TopMenu = () => {
         <img src="/gongLogo.svg" alt={"Gong logo"} />
         <b>Gong</b>
       </ImageContainer>
-      {userId ? (
+      {currentUser ? (
         <UserInfoContainer onClick={handleMenuClick}>
           <UserCard
-            userFirstName={userFirstName}
-            userLastName={userLastName}
-            userEmail={userEmail}
-            userPhoto={userPhoto}
+            userFirstName={currentUser.firstName}
+            userLastName={currentUser.lastName}
+            userEmail={currentUser.email}
+            userPhoto={currentUser.photo}
           />
           <Menu
             id="user-menu"
@@ -63,7 +60,7 @@ const TopMenu = () => {
           </Menu>
         </UserInfoContainer>
       ) : (
-        <Button variant="contained" onClick={() => navigate("/login")}>
+        <Button variant="contained" onClick={() => navigate(routes.login)}>
           Login
         </Button>
       )}
