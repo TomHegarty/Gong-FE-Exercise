@@ -9,6 +9,7 @@ function App() {
       <Route path="/" element={<LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/hierarchy" element={<HierarchyTreePage />} />
+      <Route path="*" element={<LoginPage />} />
     </Routes>
   );
 }
