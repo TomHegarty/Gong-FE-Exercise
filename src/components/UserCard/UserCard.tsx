@@ -1,65 +1,49 @@
-import { Avatar, Menu, MenuItem } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { stringAvatar, stringToColor } from "../../utils/avatars";
-import { useUserStore } from "../../stores/UserStore";
 import { UserCardContainer } from "./user-card.style";
-import { useState } from "react";
-import { useHandleAuth } from "../../hooks/useHandleAuth";
 
-const UserCard = () => {
-  const userFirstName = useUserStore((state) => state.userFirstName);
-  const userLastName = useUserStore((state) => state.userLastName);
-  const userPhoto = useUserStore((state) => state.userPhoto);
-  const userEmail = useUserStore((state) => state.userEmail);
+interface UserCardProps {
+  userFirstName: string | undefined;
+  userLastName: string | undefined;
+  userPhoto?: string | undefined;
+  userEmail: string | undefined;
+}
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const { handleLogout } = useHandleAuth();
-
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
+const UserCard = (props: UserCardProps) => {
   return (
     <>
-      <UserCardContainer onClick={handleMenuClick}>
+      <UserCardContainer>
         <div className="user-avatar">
-          {userPhoto ? (
+          {props.userPhoto ? (
             <Avatar
-              alt={`${userFirstName} ${userLastName}`}
-              src={userPhoto}
+              alt={`${props.userFirstName || "unnamed user"} ${
+                props.userLastName
+              }`}
+              src={props.userPhoto}
               variant="rounded"
               sx={{ width: 32, height: 32 }}
             />
           ) : (
             <Avatar
-              {...stringAvatar(`${userFirstName} ${userLastName}`)}
+              {...stringAvatar(`${props.userFirstName} ${props.userLastName}`)}
               variant="rounded"
               sx={{
                 width: 32,
                 height: 32,
-                background: stringToColor(`${userFirstName} ${userLastName}`),
+                background: stringToColor(
+                  `${props.userFirstName} ${props.userLastName}`
+                ),
               }}
             />
           )}
         </div>
         <div className="user-info">
           <b>
-            {userFirstName} {userLastName}
+            {props.userFirstName} {props.userLastName}
           </b>{" "}
-          {userEmail}
+          {props.userEmail}
         </div>
       </UserCardContainer>
-      <Menu
-        id="user-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      </Menu>
     </>
   );
 };

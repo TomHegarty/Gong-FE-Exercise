@@ -1,6 +1,10 @@
 import { create } from "zustand";
 import type { UserData } from "../services/RealtimeDatabaseService";
 
+export interface UserNode extends UserData {
+  children: UserNode[];
+}
+
 const hierarchyStoreInitialState = {
   lastFetched: 0,
   hierarchyTree: undefined,
@@ -9,8 +13,8 @@ const hierarchyStoreInitialState = {
 interface HierarchyStore {
   lastFetched: number;
   setLastFetched: (timestamp: number) => void;
-  hierarchyTree: UserData[] | undefined;
-  setHierarchyTree: (tree: UserData[] | undefined) => void;
+  hierarchyTree: UserNode[] | undefined;
+  setHierarchyTree: (tree: UserNode[] | undefined) => void;
 }
 
 export const useHierarchyStore = create<HierarchyStore>((set) => ({

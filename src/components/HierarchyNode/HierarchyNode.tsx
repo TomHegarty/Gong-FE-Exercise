@@ -1,58 +1,38 @@
 import { useState } from "react";
-import type { UserData } from "../../services/RealtimeDatabaseService";
-import UserHierarchyRow from "../UserHierarchyRow/UserInfoRow";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import {
-  UserHierarchyNodeButton,
+  UserHierarchyChildrenWrapper,
   UserHierarchyNodeContainer,
 } from "./hierarchy-node.style";
+import UserCard from "../UserCard/UserCard";
+import ExpandToggleButton from "../ExpandButton/ExpandButton";
+import type { UserNode } from "../../stores/HierarchyStore";
 
-export interface UserNode extends UserData {
-  children: UserNode[];
-}
-
-interface HierarchyNodeProps {
-  user: UserNode;
-}
-
-const HierarchyNode = (props: HierarchyNodeProps) => {
-  const isManager = props.user.children.length > 0;
+const HierarchyNode = (props: UserNode) => {
+  const isManager = props.children.length > 0;
   const [expanded, setExpanded] = useState(false);
 
   return (
     <UserHierarchyNodeContainer>
       <div className="user-hierarchy-row">
-        <UserHierarchyNodeButton
-          isManager={isManager}
-          onClick={() => isManager && setExpanded(!expanded)}
-        >
-          {isManager ? (
-            expanded ? (
-              <div
-                style={{
-                  transform: "rotate(45deg)",
-                }}
-              >
-                <AddIcon />
-              </div>
-            ) : (
-              <AddIcon />
-            )
-          ) : (
-            <RemoveIcon />
-          )}
-        </UserHierarchyNodeButton>
-
-        <UserHierarchyRow userData={props.user} />
+        <ExpandToggleButton
+          toggleState={expanded}
+          toggleSetter={setExpanded}
+          inactive={!isManager}
+        />
+        <UserCard
+          userFirstName={props.firstName}
+          userLastName={props.lastName}
+          userEmail={props.email}
+          userPhoto={props.photo}
+        />
       </div>
-      {expanded && isManager && (
-        <ul className="user-hierarchy-children-container">
-          {props.user.children.map((child: UserNode) => (
-            <HierarchyNode key={child.id} user={child} />
+      <UserHierarchyChildrenWrapper expanded={expanded && isManager}>
+        {expanded &&
+          isManager &&
+          props.children.map((child: UserNode) => (
+            <HierarchyNode key={child.id} {...child} />
           ))}
-        </ul>
-      )}
+      </UserHierarchyChildrenWrapper>
     </UserHierarchyNodeContainer>
   );
 };

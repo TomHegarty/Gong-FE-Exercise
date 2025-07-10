@@ -7,7 +7,7 @@ export const HierarchyTreeOuter = styled.ul((props) => ({
   flexDirection: "column",
   gap: props.theme.spacing(1),
   backgroundColor: props.theme.palette.grey[100],
-  borderRadius: props.theme.spacing(1),
+  borderRadius: props.theme.spacing(2),
 
   ".& li": {
     marginLeft: props.theme.spacing(2),

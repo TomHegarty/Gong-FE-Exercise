@@ -2,16 +2,12 @@ import {
   fetchAllUserData,
   type UserData,
 } from "../services/RealtimeDatabaseService";
-import { useHierarchyStore } from "../stores/HierarchyStore";
+import { useHierarchyStore, type UserNode } from "../stores/HierarchyStore";
 import { useUserStore } from "../stores/UserStore";
 
 export interface AuthReturnType {
   message: string;
   status: "success" | "error";
-}
-
-export interface UserNode extends UserData {
-  children: UserNode[];
 }
 
 export const useHierarchyData = () => {

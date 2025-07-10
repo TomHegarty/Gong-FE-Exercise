@@ -12,6 +12,7 @@ export const UserHierarchyNodeContainer = styled.li((props) => ({
   maxWidth: "100%",
 
   "& .user-hierarchy-row": {
+    width: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -28,11 +29,16 @@ export const UserHierarchyNodeContainer = styled.li((props) => ({
   },
 }));
 
-interface UserHierarchyNodeButtonProps {
-  isManager: boolean;
+interface UserHierarchyChildrenWrapperProps {
+  expanded: boolean;
 }
 
-export const UserHierarchyNodeButton =
-  styled.span<UserHierarchyNodeButtonProps>((props) => ({
-    cursor: props.isManager ? "pointer" : "default",
+export const UserHierarchyChildrenWrapper =
+  styled.ul<UserHierarchyChildrenWrapperProps>((props) => ({
+    width: "100%",
+    overflow: "hidden",
+    transition: "max-height 0.5s ease",
+    maxHeight: props.expanded ? 1000 : 0,
+    padding: 0,
+    margin: 0,
   }));

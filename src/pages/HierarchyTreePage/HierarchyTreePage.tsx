@@ -35,7 +35,7 @@ const HierarchyTreePage = () => {
           {hierarchyTree ? (
             <HierarchyTreeOuter>
               {hierarchyTree.map((rootUser) => (
-                <HierarchyNode key={rootUser.id} user={rootUser} />
+                <HierarchyNode key={rootUser.id} {...rootUser} />
               ))}
             </HierarchyTreeOuter>
           ) : (

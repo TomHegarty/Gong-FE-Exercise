@@ -26,3 +26,10 @@ export const ImageContainer = styled.span((props) => ({
     width: 24,
   },
 }));
+
+export const UserInfoContainer = styled.div((props) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: props.theme.spacing(1),
+  maxWidth: "300px",
+}));
