@@ -15,7 +15,7 @@ This app is built to satisfy the requirements from the provided specification, t
 
 - `npm i `
 - `npm run build`
-- `npm run serve`
+- `npm run preview`
 
 **run tests:**
 

@@ -8,12 +8,10 @@ import { validateEmail, validatePassword } from "../../utils/validations";
 import { routes } from "../../routes";
 
 const LoginPage = () => {
-  const [userEmail, setUserEmail] = useState<string | undefined>(
-    "eric.lutes@luteric.co.uk"
-  ); //⚠️⚠️⚠️⚠️
+  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
   const [userPassword, setUserPassword] = useState<string | undefined>(
-    "Vg=@|AN4"
-  ); //⚠️⚠️⚠️⚠️
+    undefined
+  );
   const [emailError, setEmailError] = useState<string | undefined>(undefined);
   const [passwordError, setPasswordError] = useState<string | undefined>(
     undefined
