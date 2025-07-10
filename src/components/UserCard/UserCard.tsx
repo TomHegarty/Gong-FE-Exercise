@@ -10,38 +10,40 @@ interface UserCardProps {
 }
 
 const UserCard = (props: UserCardProps) => {
+  const userName =
+    props.userFirstName && props.userLastName
+      ? `${props.userFirstName} ${props.userLastName}`
+      : "username not available";
+
+  const userEmail = props.userEmail ? props.userEmail : "email not available";
+
   return (
     <>
       <UserCardContainer>
-        <div className="user-avatar">
+        <div className={"user-avatar"}>
           {props.userPhoto ? (
             <Avatar
-              alt={`${props.userFirstName || "unnamed user"} ${
-                props.userLastName
-              }`}
+              alt={userName}
               src={props.userPhoto}
-              variant="rounded"
+              variant={"rounded"}
               sx={{ width: 32, height: 32 }}
+              aria-label={"user avatar"}
             />
           ) : (
             <Avatar
-              {...stringAvatar(`${props.userFirstName} ${props.userLastName}`)}
-              variant="rounded"
+              {...stringAvatar(userName)}
+              variant={"rounded"}
+              aria-label={"user avatar"}
               sx={{
                 width: 32,
                 height: 32,
-                background: stringToColor(
-                  `${props.userFirstName} ${props.userLastName}`
-                ),
+                background: stringToColor(userName),
               }}
             />
           )}
         </div>
-        <div className="user-info">
-          <b>
-            {props.userFirstName} {props.userLastName}
-          </b>{" "}
-          {props.userEmail}
+        <div className={"user-info"}>
+          <b>{userName}</b> {userEmail}
         </div>
       </UserCardContainer>
     </>
